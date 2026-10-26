@@ -1,0 +1,285 @@
+[
+  {
+    "name": "id",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 32
+    },
+    "nullable": false,
+    "identity": {
+      "generated": "by_default"
+    }
+  },
+  {
+    "name": "int_col",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 32
+    },
+    "nullable": false
+  },
+  {
+    "name": "int_small",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 16
+    },
+    "nullable": true
+  },
+  {
+    "name": "int_big",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 64
+    },
+    "nullable": true
+  },
+  {
+    "name": "decimal_col",
+    "type": {
+      "kind": "decimal",
+      "unsigned": false,
+      "tz": false,
+      "precision": 10,
+      "scale": 2
+    },
+    "nullable": false
+  },
+  {
+    "name": "decimal_unconstrained",
+    "type": {
+      "kind": "decimal",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "float_col",
+    "type": {
+      "kind": "float",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "double_col",
+    "type": {
+      "kind": "double",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "char_col",
+    "type": {
+      "kind": "char",
+      "unsigned": false,
+      "tz": false,
+      "length": 5
+    },
+    "nullable": true
+  },
+  {
+    "name": "varchar_col",
+    "type": {
+      "kind": "varchar",
+      "unsigned": false,
+      "tz": false,
+      "length": 100
+    },
+    "nullable": true
+  },
+  {
+    "name": "text_col",
+    "type": {
+      "kind": "text",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "bytes_col",
+    "type": {
+      "kind": "bytes",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "bool_col",
+    "type": {
+      "kind": "bool",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "date_col",
+    "type": {
+      "kind": "date",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "time_col",
+    "type": {
+      "kind": "time",
+      "unsigned": false,
+      "tz": false,
+      "precision": 3
+    },
+    "nullable": true
+  },
+  {
+    "name": "timetz_col",
+    "type": {
+      "kind": "time",
+      "unsigned": false,
+      "tz": true,
+      "precision": 2
+    },
+    "nullable": true
+  },
+  {
+    "name": "ts_col",
+    "type": {
+      "kind": "timestamp",
+      "unsigned": false,
+      "tz": false,
+      "precision": 4
+    },
+    "nullable": true
+  },
+  {
+    "name": "tstz_col",
+    "type": {
+      "kind": "timestamp",
+      "unsigned": false,
+      "tz": true,
+      "precision": 6
+    },
+    "nullable": true
+  },
+  {
+    "name": "interval_col",
+    "type": {
+      "kind": "interval",
+      "unsigned": false,
+      "tz": false,
+      "precision": 2,
+      "intervalFields": "day to second"
+    },
+    "nullable": true
+  },
+  {
+    "name": "uuid_col",
+    "type": {
+      "kind": "uuid",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "json_col",
+    "type": {
+      "kind": "json",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "int_array",
+    "type": {
+      "kind": "array",
+      "unsigned": false,
+      "tz": false,
+      "elementNullable": true,
+      "element": {
+        "kind": "int",
+        "unsigned": false,
+        "tz": false,
+        "bits": 32
+      }
+    },
+    "nullable": true
+  },
+  {
+    "name": "text_array",
+    "type": {
+      "kind": "array",
+      "unsigned": false,
+      "tz": false,
+      "elementNullable": true,
+      "element": {
+        "kind": "text",
+        "unsigned": false,
+        "tz": false
+      }
+    },
+    "nullable": true
+  },
+  {
+    "name": "enum_col",
+    "type": {
+      "kind": "custom",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true
+  },
+  {
+    "name": "nullable_col",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 32
+    },
+    "nullable": true
+  },
+  {
+    "name": "default_col",
+    "type": {
+      "kind": "int",
+      "unsigned": false,
+      "tz": false,
+      "bits": 32
+    },
+    "nullable": true,
+    "default": {
+      "kind": "literal",
+      "value": "42"
+    }
+  },
+  {
+    "name": "expr_col",
+    "type": {
+      "kind": "timestamp",
+      "unsigned": false,
+      "tz": false
+    },
+    "nullable": true,
+    "default": {
+      "kind": "expression",
+      "sql": "now()"
+    }
+  }
+]

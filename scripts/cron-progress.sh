@@ -72,7 +72,7 @@ fi
 
 # ---- Test gate: run npm test ----
 TESTS_PASSED=false
-if npm test >> "$LOG_FILE" 2>&1; then
+if bun run test >> "$LOG_FILE" 2>&1; then
   TESTS_PASSED=true
   echo "npm test: PASS" >> "$LOG_FILE"
 else

@@ -13,7 +13,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "test": "npm run typecheck && npx tsx test/postgres/pglite.ts && npx tsx test/postgres/negative.ts && npx tsx test/postgres/defaults.ts && npx tsx test/postgres/edge.ts && npx tsx test/postgres/matrix.ts && npx tsx test/postgres/roundtrip-pg.ts && npx tsx test/postgres/searchpath.ts && npx tsx test/postgres/toposort.ts && npx tsx test/sqlite/basic.ts && npx tsx test/mysql/basic.ts"
+    "test": "bun run typecheck && bun test/postgres/pglite.ts && bun test/postgres/negative.ts && bun test/postgres/defaults.ts && bun test/postgres/edge.ts && bun test/postgres/matrix.ts && bun test/postgres/roundtrip-pg.ts && bun test/postgres/searchpath.ts && bun test/postgres/toposort.ts && bun test/sqlite/basic.ts && bun test/mysql/basic.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.11",

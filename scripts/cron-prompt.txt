@@ -9,7 +9,7 @@ MANDATORY FIRST STEPS:
 YOUR TASK THIS RUN (keep it small and incremental, ~20 minutes of work):
 - Pick the single highest-priority incomplete sub-goal from GOALS.md.
 - Make concrete, focused progress: write code, add tests, update documentation.
-- Run `npm test` before committing. Fix failures.
+- Run `bun run test` before committing. Fix failures.
 - Update GOALS.md checkboxes and progress notes to reflect what you actually accomplished.
 - Append a short entry to REVIEW.md: what you changed, what you're unsure about, what's next.
 - Make ONE git commit with a conventional message referencing the goal (e.g., "feat(mysql): catalog parser + tests (goal: MYSQL-1)"). Do NOT push.
@@ -20,7 +20,7 @@ GUARDRAILS (STRICT):
 - Do not change the core IR schema (src/schema.ts) unless a test failure proves it's necessary — document why in the commit message.
 - Keep changes focused on ONE sub-goal per run. Do not sprawl.
 - If you cannot make meaningful progress, update GOALS.md with a note and commit that, rather than forcing broken changes.
-- NEVER commit if `npm test` fails. If tests fail, revert with `git checkout -- .` and `git clean -fd`, then commit only a GOALS.md note about the blocker.
+- NEVER commit if `bun run test` fails. If tests fail, revert with `git checkout -- .` and `git clean -fd`, then commit only a GOALS.md note about the blocker.
 - NEVER use: git commit --amend, git rebase, git reset --hard, git push --force, git push.
 - Always run `git diff --stat` before committing to review what changed.
 - Always append to REVIEW.md before committing.

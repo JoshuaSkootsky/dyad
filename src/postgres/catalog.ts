@@ -210,7 +210,7 @@ export async function parseColumn(client: PgQueryClient, row: PgColumnRow, known
 
   const identity = parseIdentity(row.is_identity, row.identity_generation, row.serial_seq, row.column_default);
   const generated = row.attgenerated === 's' ? 'stored' : row.attgenerated === 'v' ? 'virtual' : undefined;
-  const defaultValue = parseDefault(row.column_default, row.is_identity, row.identity_generation, row.attgenerated === 's' ? 'ALWAYS' : 'NEVER', row.generation_expression, row.serial_seq);
+  const defaultValue = parseDefault(row.column_default, row.is_identity, row.identity_generation, row.attgenerated !== '' ? 'ALWAYS' : 'NEVER', row.generation_expression, row.serial_seq);
 
   // if serial, strip the nextval default (identity handles it)
   const finalDefault = row.serial_seq ? undefined : defaultValue;

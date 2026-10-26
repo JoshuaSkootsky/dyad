@@ -32,7 +32,7 @@ equals(t, fromNative('postgres', 'numeric', [10, 2])); // true
 ```
 
 ## Status
-v0.3.0 — schema + native mapping + normalize/equals + **Postgres catalog parser** (subpath export `dyad/postgres`) + **SQLite catalog parser** (subpath export `dyad/sqlite`) + comprehensive test matrix.
+v0.3.1 — schema + native mapping + normalize/equals + **Postgres catalog parser** (subpath export `dyad/postgres`) + **SQLite catalog parser** (subpath export `dyad/sqlite`) + **MySQL catalog parser** (subpath export `dyad/mysql`) + comprehensive test matrix.
 
 ### Postgres parser
 - Uses `format_type(atttypid, atttypmod)` for built-ins; `pg_type.typtype`/`typelem` for named types and arrays (search_path-independent).
@@ -55,6 +55,19 @@ v0.3.0 — schema + native mapping + normalize/equals + **Postgres catalog parse
 - Primary keys via `PRAGMA table_info` pk flag.
 - No named types (SQLite has no enums, domains, composites, ranges).
 - `parseDatabase(client, dbName)` returns a full `Database` descriptor.
+
+### MySQL parser (`dyad/mysql`)
+- Type mapping via INFORMATION_SCHEMA: ints (tinyint/smallint/mediumint/int/bigint) with unsigned, decimal/numeric, float/double, char/varchar/text/blob/binary, date/time/datetime/timestamp, json, enum, set.
+- ENUM → `enum` with values; SET → `enum` with values and `native.category = 'set'`.
+- Unsigned flag preserved on int/decimal/float/double.
+- Collation and charset preserved on text types.
+- Defaults: literals, CURRENT_TIMESTAMP (expression), generated columns.
+- Generated columns: stored/virtual with expression in `default`.
+- Auto-increment → identity by_default.
+- Primary keys via INFORMATION_SCHEMA.KEY_COLUMN_USAGE.
+- Foreign keys via INFORMATION_SCHEMA.KEY_COLUMN_USAGE (grouped by constraint).
+- `parseDatabase(client, dbName, serverVersion?)` returns a full `Database` descriptor.
+- No named types registry (enums/sets are column-level).
 
 ### Emitter
 - Topological sort for named types (dependencies before dependents).

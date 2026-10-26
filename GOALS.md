@@ -39,7 +39,7 @@ For example, `VARCHAR(255)` in SQLite does not have the same enforcement semanti
 ### G1: Lossless type capture
 Capture every RDBMS type without silently discarding native information. Unknown/extension types get a `custom` representation with `native` metadata preserved.
 
-**Status: Implemented (Postgres, SQLite); Not started (MySQL)**
+**Status: Implemented (Postgres, SQLite, MySQL)**
 
 Exit criteria:
 - Postgres: all types in the supported-postgres matrix pass ingestion without silent loss. ✅
@@ -55,7 +55,7 @@ Sub-goals:
 - [x] G1.6 — Collation and charset on text types
 - [x] G1.7 — Column metadata: defaults (literal vs expression), identity, generated, collation
 - [x] G1.8 — SQLite affinity rules (declared type → affinity, original string preserved in `native`) ✅ NEW
-- [ ] G1.9 — MySQL type mapping (unsigned, SET, native enums, dialect-specific params)
+- [x] G1.9 — MySQL type mapping (unsigned, SET, native enums, dialect-specific params) ✅ NEW
 - [ ] G1.10 — Extension types with category hints (citext, hstore, ltree) — untested (not available in PGlite)
 
 ### G2: Canonical structural comparison
@@ -133,13 +133,13 @@ Sub-goals:
 ### G6: Cross-database superset claim
 Prove the IR generalizes beyond Postgres.
 
-**Status: In progress (SQLite done, MySQL pending)**
+**Status: In progress (SQLite and MySQL done)**
 
 Exit criteria: representative vertical slices for MySQL and SQLite pass; unresolved differences are explicitly represented in the IR.
 
 Sub-goals:
 - [x] G6.1 — SQLite parser (affinity rules, declared type preservation, FKs, defaults) ✅ NEW
-- [ ] G6.2 — MySQL parser (vertical slice: unsigned, SET, native enum, dialect params)
+- [x] G6.2 — MySQL parser (vertical slice: unsigned, SET, native enum, dialect params) ✅ NEW
 - [ ] G6.3 — Cross-database equality semantics documented
 - [ ] G6.4 — Representative type matrix for each dialect (SQLite matrix pending)
 - [ ] G6.5 — Verify no IR changes needed after MySQL/SQLite slices
@@ -226,12 +226,12 @@ If maintaining momentum matters more than closing the Postgres emitter immediate
 
 | Goal | Status | Notes |
 |---|---|---|
-| G1 Lossless type capture | Implemented (Postgres, SQLite) | MySQL pending |
+| G1 Lossless type capture | Implemented (Postgres, SQLite, MySQL) | MySQL vertical slice done |
 | G2 Canonical structural comparison | Implemented and tested | Postgres-only evidence |
 | G3 Postgres catalog import | Implemented and hardened | Supported-postgres matrix |
 | G4 Test matrix | Hardened | 33/33 pass, 3 skipped |
 | G5 Dependency-aware emission | Implemented and tested | Cycle handling in emitter pending |
-| G6 Cross-database superset | In progress | SQLite done, MySQL pending |
+| G6 Cross-database superset | In progress | SQLite and MySQL vertical slices done |
 | G7 Contract lock | Not started | Versioning can start now |
 | G8 JSON Schema export | Not started | After IR is stable |
 | G9 Consumer probe (Reylo) | Not started | Before contract lock |

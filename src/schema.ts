@@ -121,9 +121,10 @@ export const Column = z.object({
   if (col.identity && col.default) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'identity and default cannot both be set' });
   }
-  // generated and identity/default are mutually exclusive
-  if (col.generated && (col.identity || col.default)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'generated columns cannot have identity or default' });
+  // generated columns may carry their generation expression in `default` (as an
+  // expression), but cannot have an identity.
+  if (col.generated && col.identity) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'generated columns cannot have identity' });
   }
   // column-level collation only meaningful for text types
   if (col.collation && !['char', 'varchar', 'text'].includes(col.type.kind)) {

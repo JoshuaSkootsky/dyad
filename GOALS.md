@@ -163,7 +163,14 @@ Note: contract *versioning* (adding `irVersion`) should happen before contract *
 ### G8: JSON Schema export
 Lossy projection for tooling and publication.
 
-**Status: Not started**
+**Status: Implemented**
+
+Exit criteria: export works for all IR kinds; unsupported/approximated cases documented. ✅
+
+Sub-goals:
+- [x] G8.1 — `typeToJsonSchema`, `columnToJsonSchema`, `tableToJsonSchema`, `databaseToJsonSchema` implemented
+- [x] G8.2 — x-dyad-* annotations preserve native info; nullable via type array; documented as lossy projection
+- [ ] G8.3 — Verify export doesn't claim round-trip fidelity (documented in README)
 
 Exit criteria: export works for all IR kinds; unsupported/approximated cases documented.
 
@@ -233,7 +240,7 @@ If maintaining momentum matters more than closing the Postgres emitter immediate
 | G5 Dependency-aware emission | Implemented and tested | Cycle handling in emitter pending |
 | G6 Cross-database superset | In progress | SQLite and MySQL vertical slices done |
 | G7 Contract lock | Not started | Versioning can start now |
-| G8 JSON Schema export | Not started | After IR is stable |
+| G8 JSON Schema export | Implemented | Lossy projection with x-dyad annotations |
 | G9 Consumer probe (Reylo) | Not started | Before contract lock |
 | G10 Reylo adapter | Not started | Separate package |
 

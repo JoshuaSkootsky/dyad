@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export PATH="/home/skootsky/.bun/bin:/home/skootsky/.fly/bin:/home/skootsky/.opencode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 PROJECT_DIR="/home/skootsky/coding-projects/dyad"
 LOG_DIR="$PROJECT_DIR/.cron-logs"
 LOCK_FILE="$PROJECT_DIR/.cron.lock"

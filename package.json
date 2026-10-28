@@ -9,7 +9,6 @@
     "./postgres": "./src/postgres/index.ts",
     "./sqlite": "./src/sqlite/index.ts",
     "./mysql": "./src/mysql/index.ts",
-    "./json-schema": "./src/json-schema.ts",
     "./json-schema": "./src/json-schema.ts"
   },
   "scripts": {

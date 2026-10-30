@@ -1,6 +1,36 @@
+# Dependencies
 node_modules/
+
+# Build output
+dist/
+*.js.map
+
+# Database files
 *.db
 *.db-*
+*.sqlite
+*.sqlite-*
+
+# Logs
+*.log
 .cron-logs/
+
+# Cron artifacts
 .cron.lock
 .cron-stop
+.cron-blocked-count
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,9 +1,32 @@
 {
   "name": "dyad",
   "version": "0.3.0",
-  "description": "A serializable superset type system for RDBMS types (Postgres, MySQL, SQLite). Intended as the public type IR for Reylo's inference engine.",
+  "description": "A serializable, versioned database type IR for TypeScript. Captures RDBMS types without lowest-common-denominator loss. Parsers for PostgreSQL, MySQL, and SQLite. Projections to TypeScript and JSON Schema.",
   "type": "module",
   "main": "src/index.ts",
+  "license": "MIT",
+  "author": "Joshua Skootsky",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skootsky/dyad"
+  },
+  "homepage": "https://github.com/skootsky/dyad#readme",
+  "bugs": {
+    "url": "https://github.com/skootsky/dyad/issues"
+  },
+  "keywords": [
+    "database",
+    "types",
+    "ir",
+    "intermediate-representation",
+    "postgres",
+    "mysql",
+    "sqlite",
+    "schema",
+    "reylo",
+    "zod",
+    "typescript"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./postgres": "./src/postgres/index.ts",

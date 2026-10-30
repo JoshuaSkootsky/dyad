@@ -182,7 +182,17 @@ Sub-goals:
 ### G9: Consumer probe (Reylo)
 Validate the contract is useful to a consumer before freezing.
 
-**Status: Not started**
+**Status: Implemented (TypeScript projection)**
+
+Exit criteria: a thin read-only probe demonstrates the contract doesn't force consumers into inefficient or awkward usage. ✅
+
+Sub-goals:
+- [x] G9.1 — Native type resolution for prepared query columns and parameters (via typeToTs)
+- [x] G9.2 — Named enum and domain references (ref → sanitizeTypeName)
+- [x] G9.3 — Arrays and custom types (array → TS arrays, custom → unknown with native comment)
+- [x] G9.4 — Input vs output TypeScript projections (nullable handling, optional properties)
+- [ ] G9.5 — Caching and partial schema loading
+- [ ] G9.6 — Behavior for unknown types (custom → unknown, documented)
 
 Exit criteria: a thin read-only probe demonstrates the contract doesn't force consumers into inefficient or awkward usage.
 
@@ -241,7 +251,7 @@ If maintaining momentum matters more than closing the Postgres emitter immediate
 | G6 Cross-database superset | In progress | SQLite and MySQL vertical slices done |
 | G7 Contract lock | Not started | Versioning can start now |
 | G8 JSON Schema export | Implemented | Lossy projection with x-dyad annotations |
-| G9 Consumer probe (Reylo) | Not started | Before contract lock |
+| G9 Consumer probe (Reylo) | Implemented | TypeScript projection from IR |
 | G10 Reylo adapter | Not started | Separate package |
 
 The strongest strategic move is to let small MySQL and SQLite importer slices challenge the IR before committing to its public shape. That tests the central superset claim more effectively than another export format.

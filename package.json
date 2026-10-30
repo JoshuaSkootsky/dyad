@@ -9,12 +9,13 @@
     "./postgres": "./src/postgres/index.ts",
     "./sqlite": "./src/sqlite/index.ts",
     "./mysql": "./src/mysql/index.ts",
-    "./json-schema": "./src/json-schema.ts"
+    "./json-schema": "./src/json-schema.ts",
+    "./probe/typescript": "./src/probe/typescript.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "test": "bun run typecheck && bun test/postgres/pglite.ts && bun test/postgres/negative.ts && bun test/postgres/defaults.ts && bun test/postgres/edge.ts && bun test/postgres/matrix.ts && bun test/postgres/roundtrip-pg.ts && bun test/postgres/searchpath.ts && bun test/postgres/toposort.ts && bun test/sqlite/basic.ts && bun test/mysql/basic.ts && bun test/json-schema/basic.ts"
+    "test": "bun run typecheck && bun test/postgres/pglite.ts && bun test/postgres/negative.ts && bun test/postgres/defaults.ts && bun test/postgres/edge.ts && bun test/postgres/matrix.ts && bun test/postgres/roundtrip-pg.ts && bun test/postgres/searchpath.ts && bun test/postgres/toposort.ts && bun test/sqlite/basic.ts && bun test/mysql/basic.ts && bun test/json-schema/basic.ts && bun test/probe/typescript.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.11",

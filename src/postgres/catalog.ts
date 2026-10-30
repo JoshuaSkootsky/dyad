@@ -45,6 +45,7 @@ export interface PgTypeRow {
   typtype: string;
   typcategory: string;
   typbasetype: number;
+  typrelid: number;
   base_type_name: string | null;
   base_schema_name: string | null;
 }
@@ -118,6 +119,7 @@ SELECT
   t.typtype,
   t.typcategory,
   t.typbasetype,
+  t.typrelid,
   bt.typname AS base_type_name,
   bn.nspname AS base_schema_name
 FROM pg_type t
@@ -281,7 +283,29 @@ export async function parseNamedTypes(client: PgQueryClient, schemaName: string)
     } else if (kind === 'range') {
       type = { kind: 'range', name: qualifiedName };
     } else if (kind === 'composite') {
-      type = { kind: 'struct', name: qualifiedName };
+      // Fetch composite type attributes from pg_attribute
+      const attrsRes = await client.query<{ attname: string; atttypid: number; atttypmod: number; attnotnull: boolean }>(
+        `SELECT a.attname, a.atttypid, a.atttypmod, a.attnotnull FROM pg_attribute a WHERE a.attrelid = $1 AND a.attnum > 0 AND NOT a.attisdropped ORDER BY a.attnum`,
+        [r.typrelid],
+      );
+      const fields: { name: string; type: any; nullable: boolean }[] = [];
+      for (const attr of attrsRes.rows) {
+        const typeRes = await client.query<{ data_type: string; typtype: string; type_schema: string; type_name: string; typelem: number; elem_typtype: string | null; elem_type_schema: string | null; elem_type_name: string | null }>(
+          `SELECT format_type(t.oid, $2) AS data_type, t.typtype, t.typnamespace::regnamespace::text AS type_schema, t.typname AS type_name, t.typelem, te.typtype AS elem_typtype, te.typnamespace::regnamespace::text AS elem_type_schema, te.typname AS elem_type_name FROM pg_type t LEFT JOIN pg_type te ON te.oid = t.typelem WHERE t.oid = $1`,
+          [attr.atttypid, attr.atttypmod],
+        );
+        const trow = typeRes.rows[0];
+        let fieldType: any;
+        if (trow && ['e', 'd', 'c', 'r', 'm'].includes(trow.typtype)) {
+          fieldType = { kind: 'ref', name: `${trow.type_schema}.${trow.type_name}`, native: { dialect: 'postgres', name: trow.data_type } };
+        } else if (trow && trow.typtype === 'b' && trow.typelem !== 0 && trow.elem_typtype && ['e', 'd', 'c', 'r', 'm'].includes(trow.elem_typtype)) {
+          fieldType = { kind: 'array', element: { kind: 'ref', name: `${trow.elem_type_schema}.${trow.elem_type_name}` }, elementNullable: true, native: { dialect: 'postgres', name: trow.data_type } };
+        } else {
+          fieldType = parseFormatType(trow?.data_type ?? 'text');
+        }
+        fields.push({ name: attr.attname, type: fieldType, nullable: !attr.attnotnull });
+      }
+      type = { kind: 'struct', name: qualifiedName, fields };
     } else if (kind === 'domain') {
       // domain references its base type
       if (r.base_type_name && r.base_schema_name) {

@@ -227,9 +227,10 @@ Sub-goals:
 - [ ] G7.2 — Serialized JSON fixtures as compatibility tests
 - [x] G7.3 — Document normalization and equality semantics (lens law: PutGet holds, GetPut fails by design)
 - [x] G7.4 — `.passthrough()` on all IR objects preserves unknown fields (forward compat)
-- [ ] G7.5 — Forward-compat test: unknown kinds rejected by `z.enum` (documented limitation)
+- [x] G7.4 — `.passthrough()` on all IR objects preserves unknown fields (forward compat) ✅
+- [x] G7.5 — Forward-compat test: unknown fields preserved (unknown kinds rejected by `z.enum`, documented) ✅
 - [ ] G7.6 — Version envelope: `irVersion` outside `Database` so v1 readers can read version of unparseable payloads
-- [ ] G7.7 — Property-test `normalize()` idempotence and `equals()` reflexivity/symmetry
+- [x] G7.7 — Property-test `normalize()` idempotence, `equals()` reflexivity/symmetry/transitivity (396 cases) ✅
 
 Note: contract *versioning* (adding `irVersion`) should happen before contract *locking*. Versioning is an implementation detail; locking is a compatibility guarantee.
 

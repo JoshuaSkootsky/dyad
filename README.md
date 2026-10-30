@@ -42,6 +42,25 @@ v0.3.1 — schema + native mapping + normalize/equals + **Postgres catalog parse
 
 **Scope:** dyad is a *reading superset*, not a *translation superset*. Native string is ground truth. Canonical fields are a derived index. Nothing is emitted from the canonical layer. Emitting MySQL DDL from a Postgres-parsed IR is out of scope by design.
 
+## Round-trip definition
+
+dyad's round-trip guarantee is **semantic, not syntactic**:
+
+- **PutGet holds** (up to `normalize()`): `import(export(ir)) == ir`. The round-trip tests verify this: parse a database, emit DDL, re-parse, and compare with `equals()`. The canonical IR is preserved.
+- **GetPut fails by design**: `export(import(db)) != db`. SQL spelling, quoting, default expression text, and formatting are not preserved. The native string preserves the database's type spelling but not the original DDL text.
+
+This is the honest concession. "Lossless" means semantic round-tripping within the documented scope, not byte-for-byte SQL equality.
+
+## What "native" guarantees (per database)
+
+The `native` field preserves the database's own type representation. What it contains depends on the dialect:
+
+- **Postgres:** `format_type(atttypid, atttypmod)` output (e.g., `"character varying(255)"`, `"numeric(10,2)"`, `"timestamp(3) with time zone"`). This is the database's canonical type spelling, not the original DDL text. Modifiers are decoded into canonical fields; the native string retains the full spelling.
+- **MySQL:** `COLUMN_TYPE` from `information_schema.columns` (e.g., `"varchar(255)"`, `"decimal(10,2) unsigned"`, `"enum('a','b')"`). Includes display width, unsigned, and enum values.
+- **SQLite:** The declared type string from `PRAGMA table_info` (e.g., `"VARCHAR(255)"`, `"INTEGER"`, `""` for no declared type). SQLite types are free text; affinity rules map them to canonical kinds.
+
+In all cases, `native` preserves enough information to reconstruct the original database type. It does not preserve SQL formatting, comments, or DDL structure.
+
 ### Postgres parser
 - Uses `format_type(atttypid, atttypmod)` for built-ins; `pg_type.typtype`/`typelem` for named types and arrays (search_path-independent).
 - Joins `pg_attribute` + `pg_type` + `pg_collation` + `pg_attrdef` (no `information_schema` — avoids hidden columns).

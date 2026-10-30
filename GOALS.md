@@ -224,7 +224,7 @@ Exit criteria: compatibility fixtures frozen; versioning, evolution, unknown-kin
 
 Sub-goals:
 - [x] G7.1 — Format/schema version in serialized output (`irVersion` already exists)
-- [ ] G7.2 — Serialized JSON fixtures as compatibility tests
+- [x] G7.2 — Serialized JSON fixtures as compatibility tests ✅ (fixtures/, test/fixtures/compat.ts, 72 checks)
 - [x] G7.3 — Document normalization and equality semantics (lens law: PutGet holds, GetPut fails by design)
 - [x] G7.4 — `.passthrough()` on all IR objects preserves unknown fields (forward compat)
 - [x] G7.4 — `.passthrough()` on all IR objects preserves unknown fields (forward compat) ✅

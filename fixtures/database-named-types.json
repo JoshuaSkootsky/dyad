@@ -1,0 +1,72 @@
+{
+  "irVersion": "1",
+  "dialect": "postgres",
+  "name": "fixture_named_types",
+  "tables": [
+    {
+      "name": "complex",
+      "columns": [
+        {
+          "name": "status",
+          "type": { "kind": "ref", "name": "public.status_enum", "native": { "dialect": "postgres", "name": "status_enum" } },
+          "nullable": true
+        },
+        {
+          "name": "color",
+          "type": { "kind": "ref", "name": "public.color_domain", "native": { "dialect": "postgres", "name": "color_domain" } },
+          "nullable": true
+        },
+        {
+          "name": "location",
+          "type": { "kind": "ref", "name": "public.point2d", "native": { "dialect": "postgres", "name": "point2d" } },
+          "nullable": true
+        },
+        {
+          "name": "span",
+          "type": { "kind": "ref", "name": "public.int_range", "native": { "dialect": "postgres", "name": "int_range" } },
+          "nullable": true
+        },
+        {
+          "name": "colors",
+          "type": {
+            "kind": "array",
+            "element": { "kind": "ref", "name": "public.color_domain" },
+            "elementNullable": true,
+            "native": { "dialect": "postgres", "name": "color_domain[]" }
+          },
+          "nullable": true
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "public.status_enum",
+      "kind": "enum",
+      "type": { "kind": "enum", "values": ["active", "inactive", "pending"], "name": "public.status_enum" }
+    },
+    {
+      "name": "public.color_domain",
+      "kind": "domain",
+      "type": { "kind": "ref", "name": "public.status_enum" }
+    },
+    {
+      "name": "public.point2d",
+      "kind": "composite",
+      "type": {
+        "kind": "struct",
+        "name": "public.point2d",
+        "fields": [
+          { "name": "x", "type": { "kind": "double" }, "nullable": true },
+          { "name": "y", "type": { "kind": "double" }, "nullable": true },
+          { "name": "color", "type": { "kind": "ref", "name": "public.color_domain" }, "nullable": true }
+        ]
+      }
+    },
+    {
+      "name": "public.int_range",
+      "kind": "range",
+      "type": { "kind": "range", "name": "public.int_range" }
+    }
+  ]
+}

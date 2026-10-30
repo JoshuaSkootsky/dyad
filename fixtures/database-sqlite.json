@@ -1,0 +1,40 @@
+{
+  "irVersion": "1",
+  "dialect": "sqlite",
+  "name": "fixture_sqlite",
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "type": { "kind": "int", "bits": 64, "native": { "dialect": "sqlite", "name": "INTEGER" } },
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "email",
+          "type": { "kind": "text", "native": { "dialect": "sqlite", "name": "TEXT" } },
+          "nullable": false
+        },
+        {
+          "name": "balance",
+          "type": { "kind": "double", "native": { "dialect": "sqlite", "name": "REAL" } },
+          "nullable": true
+        },
+        {
+          "name": "data",
+          "type": { "kind": "bytes", "native": { "dialect": "sqlite", "name": "BLOB" } },
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": { "kind": "text", "native": { "dialect": "sqlite", "name": "TEXT" } },
+          "nullable": true,
+          "default": { "kind": "expression", "sql": "datetime('now')" }
+        }
+      ],
+      "primaryKey": ["id"]
+    }
+  ]
+}

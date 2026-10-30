@@ -1,0 +1,57 @@
+{
+  "irVersion": "1",
+  "dialect": "postgres",
+  "name": "fixture_basic",
+  "tables": [
+    {
+      "name": "users",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "type": { "kind": "int", "bits": 32, "unsigned": false },
+          "nullable": false,
+          "identity": { "generated": "by_default" },
+          "primaryKey": true
+        },
+        {
+          "name": "email",
+          "type": { "kind": "varchar", "length": 255, "native": { "dialect": "postgres", "name": "character varying(255)" } },
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "balance",
+          "type": { "kind": "decimal", "precision": 12, "scale": 2, "native": { "dialect": "postgres", "name": "numeric(12,2)" } },
+          "nullable": false,
+          "default": { "kind": "literal", "value": "0" }
+        },
+        {
+          "name": "created_at",
+          "type": { "kind": "timestamp", "precision": 3, "tz": true, "native": { "dialect": "postgres", "name": "timestamptz(3)" } },
+          "nullable": false,
+          "default": { "kind": "expression", "sql": "now()" }
+        },
+        {
+          "name": "tags",
+          "type": { "kind": "array", "element": { "kind": "text" }, "elementNullable": true, "native": { "dialect": "postgres", "name": "text[]" } },
+          "nullable": true
+        }
+      ],
+      "primaryKey": ["id"]
+    },
+    {
+      "name": "orders",
+      "schema": "public",
+      "columns": [
+        { "name": "id", "type": { "kind": "int", "bits": 32 }, "nullable": false, "primaryKey": true },
+        { "name": "user_id", "type": { "kind": "int", "bits": 32 }, "nullable": false },
+        { "name": "amount", "type": { "kind": "decimal", "precision": 10, "scale": 2 }, "nullable": false }
+      ],
+      "primaryKey": ["id"],
+      "foreignKeys": [
+        { "columns": ["user_id"], "refTable": "users", "refColumns": ["id"] }
+      ]
+    }
+  ]
+}

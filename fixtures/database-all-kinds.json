@@ -1,0 +1,39 @@
+{
+  "irVersion": "1",
+  "dialect": "postgres",
+  "name": "fixture_all_kinds",
+  "tables": [
+    {
+      "name": "all_kinds",
+      "columns": [
+        { "name": "c_int", "type": { "kind": "int", "bits": 32, "unsigned": false }, "nullable": true },
+        { "name": "c_int8", "type": { "kind": "int", "bits": 8, "unsigned": true }, "nullable": true },
+        { "name": "c_decimal", "type": { "kind": "decimal", "precision": 10, "scale": 2 }, "nullable": true },
+        { "name": "c_decimal_unconstrained", "type": { "kind": "decimal" }, "nullable": true },
+        { "name": "c_decimal_negscale", "type": { "kind": "decimal", "precision": 3, "scale": -2 }, "nullable": true },
+        { "name": "c_float", "type": { "kind": "float" }, "nullable": true },
+        { "name": "c_double", "type": { "kind": "double" }, "nullable": true },
+        { "name": "c_char", "type": { "kind": "char", "length": 5 }, "nullable": true },
+        { "name": "c_varchar", "type": { "kind": "varchar", "length": 255 }, "nullable": true },
+        { "name": "c_text", "type": { "kind": "text", "collation": "en_US.utf8" }, "nullable": true },
+        { "name": "c_bytes", "type": { "kind": "bytes" }, "nullable": true },
+        { "name": "c_bool", "type": { "kind": "bool" }, "nullable": true },
+        { "name": "c_date", "type": { "kind": "date" }, "nullable": true },
+        { "name": "c_time", "type": { "kind": "time", "precision": 3, "tz": false }, "nullable": true },
+        { "name": "c_timetz", "type": { "kind": "time", "precision": 2, "tz": true }, "nullable": true },
+        { "name": "c_timestamp", "type": { "kind": "timestamp", "precision": 4, "tz": false }, "nullable": true },
+        { "name": "c_timestamptz", "type": { "kind": "timestamp", "precision": 6, "tz": true }, "nullable": true },
+        { "name": "c_interval", "type": { "kind": "interval", "intervalFields": "day to second", "precision": 2 }, "nullable": true },
+        { "name": "c_uuid", "type": { "kind": "uuid" }, "nullable": true },
+        { "name": "c_json", "type": { "kind": "json" }, "nullable": true },
+        { "name": "c_array", "type": { "kind": "array", "element": { "kind": "int", "bits": 32 }, "elementNullable": true }, "nullable": true },
+        { "name": "c_struct", "type": { "kind": "struct", "fields": [{ "name": "x", "type": { "kind": "int", "bits": 32 }, "nullable": false }] }, "nullable": true },
+        { "name": "c_enum", "type": { "kind": "enum", "values": ["a", "b", "c"] }, "nullable": true },
+        { "name": "c_range", "type": { "kind": "range", "subtype": { "kind": "int", "bits": 32 }, "bounds": "[)" }, "nullable": true },
+        { "name": "c_ref", "type": { "kind": "ref", "name": "public.some_type" }, "nullable": true },
+        { "name": "c_custom", "type": { "kind": "custom", "native": { "dialect": "postgres", "name": "citext", "category": "text" } }, "nullable": true },
+        { "name": "c_unknown", "type": { "kind": "unknown" }, "nullable": true }
+      ]
+    }
+  ]
+}

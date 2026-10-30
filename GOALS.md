@@ -172,7 +172,7 @@ Sub-goals:
 - [x] G4.5 — Negative equals tests (3 cases, all pass)
 - [x] G4.6 — Search_path independence (2 paths, equals passes)
 - [x] G4.7 — Table-driven matrix (33 cases across defaults, named types, arrays, built-ins, collation, identifiers)
-- [ ] G4.8 — Round-trip tests for domains, composites, ranges, multi-dim arrays
+- [x] G4.8 — Round-trip tests for domains, composites, ranges, arrays (Postgres, SQLite, MySQL) ✅
 - [ ] G4.9 — Collation explicit test with real locale
 - [ ] G4.10 — Topological sort verification with shuffled registry order
 
@@ -194,7 +194,7 @@ Sub-goals:
 ### G6: Cross-database superset claim
 Prove the IR generalizes beyond Postgres.
 
-**Status: In progress (SQLite + MySQL done)**
+**Status: In progress (SQLite + MySQL done, round-trips verified)**
 
 Exit criteria: representative vertical slices for MySQL and SQLite pass; unresolved differences are explicitly represented in the IR.
 
@@ -210,8 +210,8 @@ Sub-goals:
 - [x] G6.1 — SQLite parser (affinity rules, declared type preservation, FKs, defaults)
 - [x] G6.2 — MySQL parser (vertical slice: unsigned, SET, native enum, dialect params)
 - [ ] G6.3 — Cross-database equality semantics documented
-- [ ] G6.4 — Representative type matrix for each dialect
-- [ ] G6.5 — Verify no IR changes needed after MySQL/SQLite slices
+- [x] G6.4 — Representative type matrix for each dialect (Postgres 33 cases, SQLite 8, MySQL 20+) ✅
+- [x] G6.5 — Verify no IR changes needed after MySQL/SQLite slices ✅ (zero schema changes)
 
 ### G7: Contract lock
 Freeze the initial public contract with compatibility guarantees.

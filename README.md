@@ -1,6 +1,12 @@
 # dyad
 
-A serializable **superset type system** for major RDBMS types (Postgres, MySQL, SQLite), intended as the public type IR for [Reylo](https://github.com/colinhacks/reylo)'s inference engine.
+A serializable **type IR** for major RDBMS types (Postgres, MySQL, SQLite) — a portable, versioned database type contract. Intended as the public type IR for [Reylo](https://github.com/colinhacks/reylo)'s inference engine.
+
+**Positioning:** dyad re-derives patterns from Prisma's `sql_schema_describer`, Atlas's type registry, and Substrait's type system, packaged as a Zod-validated, JSON-serializable IR in TypeScript. The native string is ground truth; canonical fields are a derived index. Comparison is over the index. Emission is from the native string unless a projection is explicitly requested.
+
+**What's novel:** Not the IR design (which is re-derived), but the *executable contract* — a versioned, schema-validated, serializable schema IR in TypeScript with formal `equals()` and consumer-probe evidence. Nobody in the JS ecosystem has published this. Zod makes the contract lock (G7) nearly free: `z.discriminatedUnion` on `kind` is the unknown-kind policy; `z.unknown()` passthrough on `native` is the forward-compat story.
+
+**Scope:** type IR, not schema IR. dyad captures types, not schema-level constructs (indexes, constraints, views, comments). Those are out of scope.
 
 ## Why
 Existing formats (Protobuf, Avro, Arrow, JSON Schema) optimize for *data on the wire* and collapse to a lowest-common-denominator type set. A database inference engine needs the opposite: parameterized, dialect-aware, lossless descriptors like `varchar(255)`, `numeric(10,2)`, `timestamp(3) with time zone`, `interval year to month`, typed `json`, and arrays/structs.
@@ -32,7 +38,9 @@ equals(t, fromNative('postgres', 'numeric', [10, 2])); // true
 ```
 
 ## Status
-v0.3.1 — schema + native mapping + normalize/equals + **Postgres catalog parser** (subpath export `dyad/postgres`) + **SQLite catalog parser** (subpath export `dyad/sqlite`) + **MySQL catalog parser** (subpath export `dyad/mysql`) + comprehensive test matrix.
+v0.3.1 — schema + native mapping + normalize/equals + **Postgres catalog parser** (subpath export `dyad/postgres`) + **SQLite catalog parser** (subpath export `dyad/sqlite`) + **MySQL catalog parser** (subpath export `dyad/mysql`) + JSON Schema export + TypeScript consumer probe + comprehensive test matrix.
+
+**Scope:** dyad is a *reading superset*, not a *translation superset*. Native string is ground truth. Canonical fields are a derived index. Nothing is emitted from the canonical layer. Emitting MySQL DDL from a Postgres-parsed IR is out of scope by design.
 
 ### Postgres parser
 - Uses `format_type(atttypid, atttypmod)` for built-ins; `pg_type.typtype`/`typelem` for named types and arrays (search_path-independent).

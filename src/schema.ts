@@ -10,7 +10,7 @@ export const NativeType = z.object({
   name: z.string(),
   params: z.array(z.union([z.string(), z.number()])).optional(),
   category: z.string().optional(), // e.g. "network", "geometric", "text-search"
-});
+}).passthrough();
 export type NativeType = z.infer<typeof NativeType>;
 
 // ---------- Default value (literal vs expression) ----------
@@ -69,8 +69,13 @@ export const DyadType: z.ZodType<DyadType> = z.lazy(() =>
     name: z.string().optional(),
     // custom escape hatch
     native: NativeType.optional(),
-  }),
+  }).passthrough(),
 );
+// NOTE: DyadType is hand-written because TypeScript cannot infer recursive types
+// from z.lazy() without a type annotation. The Zod schema is the source of truth;
+// this type mirrors it. If you change the schema, update this type to match.
+// Drift is mitigated by .passthrough() (forward compat) and by tests that
+// verify schema/type sync (see test/forward-compat/).
 export type DyadType = {
   kind:
     | 'int' | 'decimal' | 'float' | 'double'
@@ -116,7 +121,7 @@ export const Column = z.object({
   unique: z.boolean().optional(),
   collation: z.string().optional(), // column-level override
   comment: z.string().optional(),
-}).superRefine((col, ctx) => {
+}).passthrough().superRefine((col, ctx) => {
   // identity and default are mutually exclusive
   if (col.identity && col.default) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'identity and default cannot both be set' });
@@ -138,7 +143,7 @@ export const ForeignKey = z.object({
   columns: z.array(z.string()),
   refTable: z.string(),
   refColumns: z.array(z.string()),
-});
+}).passthrough();
 export type ForeignKey = z.infer<typeof ForeignKey>;
 
 export const Table = z.object({
@@ -148,14 +153,14 @@ export const Table = z.object({
   primaryKey: z.array(z.string()).optional(),
   foreignKeys: z.array(ForeignKey).optional(),
   comment: z.string().optional(),
-});
+}).passthrough();
 export type Table = z.infer<typeof Table>;
 
 export const NamedType = z.object({
   name: z.string(),
   kind: z.enum(['enum', 'domain', 'composite', 'range']),
   type: DyadType,
-});
+}).passthrough();
 export type NamedType = z.infer<typeof NamedType>;
 
 export const Database = z.object({
@@ -165,7 +170,7 @@ export const Database = z.object({
   name: z.string().optional(),
   tables: z.array(Table),
   types: z.array(NamedType).optional(),
-});
+}).passthrough();
 export type Database = z.infer<typeof Database>;
 
 // ---------- Helpers ----------
